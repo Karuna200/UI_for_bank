@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Admin Dashboard</title>
+  <link rel="stylesheet" href="dashboard.css" />
+  <!-- Font Awesome Cdn Link -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"> 
+  <style>
+    .hidden {
+      display: none;
+    }
+  </style>
+</head>
+<body>
+    <div class="sidebar">
+        <ul class="menu">
+            <li class="active">
+                <a href="#" onclick="toggleCard('dashboardCard')">
+                    <i class="fas fa-tachometer-alt"></i>
+                     <span>Dashboard</span>
+                </a>
+            </li>
+            <li>
+                <a href="#" id="profileLink" onclick="toggleCard('profileCard')">
+                    <i class="fa-solid fa-user"></i>
+                     <span>Profile</span>
+                </a>
+            </li>
+            <li>
+                <a href="#" id="depositLink" onclick="toggleCard('depositCard')">
+                    <i class="fa-solid fa-money-bill-wave"></i>
+                     <span>Deposit</span>
+                </a>
+            </li>
+            <li>
+                <a href="#" id="withdrawLink" onclick="toggleCard('withdrawCard')">
+                    <i class="fa-solid fa-money-bill-wave"></i>
+                     <span>Withdraw</span>
+                </a>
+            </li>
+            <li>
+                <a href="#">
+                    <i class="fa-solid fa-money-bill-transfer"></i>
+                     <span>Fund Transfer</span>
+                </a>
+            </li>
+            <li>
+                <a href="#">
+                    <i class="fa-solid fa-key"></i>
+                     <span>Account Pin</span>
+                </a>
+            </li>
+            <li>
+                <a href="#">
+                    <i class="fa-solid fa-money-check"></i>
+                     <span>Account Details</span>
+                </a>
+            </li>
+            <li>
+                <a href="#">
+                    <i class="fa-solid fa-clock-rotate-left"></i>
+                     <span>Transaction History</span>
+                </a>
+            </li>
+        </ul>
+    </div>
+
+    <div class="main--content">
+        <div class="header-wrapper">
+            <div class="header--title">
+                <span>Primary</span>
+                <h2>DashBoard</h2>  
+            </div>
+            <div class="user--info">
+                <div class="search--box">
+                <i class="fa-solid fa-magnifying-glass"></i>
+                    <input type="text" placeholder="Search"/>
+                </div>
+                <img src="" alt="">
+            </div>
+        </div>
+        <div class="card--container">
+            <div class="card--wrapper">
+                <div class="card" id="dashboardCard">
+                    <h3>Dashboard</h3>
+                    <p>Your Total balance is :  ₹<span id="currentBalance">0.00</span></p>
+                </div>
+                <div class="card hidden" id="profileCard">
+                    <h3>Profile</h3>
+                    <form>
+                        <label for="profileName">Name:</label>
+                        <input type="text" id="profileName" name="profileName" placeholder="Enter your name">
+
+                        <label for="profileEmail">Email:</label>
+                        <input type="email" id="profileEmail" name="profileEmail" placeholder="Enter your email">
+
+                        <button type="submit" onclick="event.preventDefault();">Save</button>
+                    </form>
+                </div>
+                <div class="card hidden" id="depositCard">
+                    <h3>Deposit</h3>
+                    <p>Your current balance is: <span id="currentBalanceDeposit">0.00</span></p>
+                    <form>
+                        <!-- Deposit Fields -->
+                        <label for="depositAmount">Amount:</label>
+                        <input type="text" id="depositAmount" name="depositAmount" placeholder="Enter deposit amount">
+
+                        <button type="submit" onclick="depositMoney(event)">Deposit</button>
+                    </form>
+                </div>
+                <div class="card hidden" id="withdrawCard">
+                    <h3>Withdraw</h3>
+                    <p>Your current balance is: <span id="currentBalanceWithdraw">0.00</span></p>
+                    <form>
+                        
+                        <label for="withdrawAmount">Amount:</label>
+                        <input type="text" id="withdrawAmount" name="withdrawAmount" placeholder="Please enter your amount to withdraw: ">
+
+                        <button type="submit" onclick="withdrawMoney(event)"> Withdraw Cash </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let currentBalance = 0.00;
+        function toggleCard(cardId) {
+            const cards = document.querySelectorAll('.card');
+            cards.forEach(card => {
+                if (card.id === cardId) {
+                    card.classList.remove('hidden');
+                } else {
+                    card.classList.add('hidden');
+                }
+            });
+        }
+
+        function depositMoney(event){
+            event.preventDefault();
+            const currBal = document.getElementById("currentBalance");
+            const currBaldeposit= document.getElementById("currentBalanceDeposit");
+            const depositAmountInput = document.getElementById("depositAmount");
+
+            const depositAmount = parseFloat(depositAmountInput.value);
+            const newBalance = currentBalance + depositAmount;
+
+            currBal.textContent = newBalance.toFixed(2);
+            currBaldeposit.textContent = newBalance.toFixed(2);
+            depositAmountInput.value = '';
+            currentBalance = newBalance;
+        }
+
+        function withdrawMoney(event){
+            event.preventDefault();
+            const currBal = document.getElementById("currentBalance");
+            const currBalWithdraw = document.getElementById("currentBalanceWithdraw");
+            const withdrawAmountInput = document.getElementById("withdrawAmount");
+
+            const withdrawAmount = parseFloat(withdrawAmountInput.value);
+            if (currentBalance - withdrawAmount < 0.00 || currentBalance <= 0.00) {
+                alert("You cannot withdraw money!! Insufficient Balance");
+            } else {
+                const newBalance = currentBalance - withdrawAmount;
+                currBal.textContent = newBalance.toFixed(2);
+                currBalWithdraw.textContent = newBalance.toFixed(2);
+                withdrawAmountInput.value = ''; 
+                currentBalance = newBalance;
+            }
+        }
+    </script>
+    
+</body>
+</html>

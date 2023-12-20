@@ -1,0 +1,41 @@
+<!-- registration.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="index.css">
+    <script src="script.js"></script> 
+    <title>Bank_app</title>
+</head>
+<body>
+
+    <div id="forms-contian">
+    <form class="form" id="registrationForm">
+        <h2> Register Here </h2>
+        <label for="user_name">Name: </label>
+        <input type="text" id="user_name" name="user_name" required>
+        <label for="email">Email: </label>
+        <input type="text" id="email" name="email" required>
+        <label for="number">Phone No: </label>
+        <input type="number" id="phone" required>
+        <label for="password">Password: </label>
+        <input type="password" id="password" name="password" required>
+        <button type="submit">Register</button>
+        <p>Already Have an Account ?</p><a href="SignIn.html" id="link">sign_in</a>
+    </form>
+    
+    <script>
+        document.getElementById('registrationForm').addEventListener('submit', function (event) {
+            event.preventDefault();
+            redirectToDashboard();
+        });
+
+        function redirectToDashboard() {
+            window.location.href = 'Dashboard.html';
+        }
+    </script>
+
+</div>
+</body>
+</html>
